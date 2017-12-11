@@ -9,6 +9,8 @@ import com.lmig.gfc.happydogs.models.Dog;
 
 @Repository
 public interface DogRepository extends JpaRepository<Dog, Long> {
+
+	List<Dog> findByGenderIgnoringCase(String gender);
 }
 
 

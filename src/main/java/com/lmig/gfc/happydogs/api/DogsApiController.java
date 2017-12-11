@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lmig.gfc.happydogs.models.Dog;
-import com.lmig.gfc.happydogs.models.Person;
 import com.lmig.gfc.happydogs.services.DogRepository;
 
 @RestController
@@ -28,7 +28,10 @@ public class DogsApiController {
 	}
 
 	@GetMapping("")
-	public List<Dog> getAll() {
+	public List<Dog> getAll(@RequestParam(required=false) String gender) {
+		if (gender != null) {
+			return dogRepository.findByGenderIgnoringCase(gender);
+		}
 		return dogRepository.findAll();
 	}
 	
@@ -40,6 +43,7 @@ public class DogsApiController {
 	
 	@GetMapping("{id}")
 	public Dog getOne(@PathVariable Long id) {
+//		dogRepository.findOne(id);
 		return dogRepository.findOne(id);
 	}
 	
